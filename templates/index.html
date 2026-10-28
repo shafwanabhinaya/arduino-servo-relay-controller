@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servo & Relay Controller</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎛️</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎛️ Controller Panel</h1>
+            <p>Kontrol Servo Motor & Relay Arduino</p>
+            <div id="connectionStatus" class="status-indicator">
+                Menghubungkan...
+            </div>
+        </div>
+
+        <div class="controls-grid">
+            <!-- Servo Control Section -->
+            <div class="control-section">
+                <h2 class="section-title">
+                    <span class="section-icon">⚙️</span>
+                    Servo Motor
+                </h2>
+                
+                <div class="servo-container">
+                    <div class="angle-display" id="angleDisplay">
+                        90°
+                    </div>
+                    
+                    <div class="slider-container">
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="180" 
+                            value="90" 
+                            class="servo-slider" 
+                            id="servoRange"
+                        >
+                        <div class="slider-labels">
+                            <span>0°</span>
+                            <span>90°</span>
+                            <span>180°</span>
+                        </div>
+                    </div>
+                    
+                    <div id="servoStatus"></div>
+                </div>
+            </div>
+
+            <!-- Radar Control Section -->
+            <div class="control-section">
+                <h2 class="section-title">
+                    <span class="section-icon">📡</span>
+                    Radar HC-SR04
+                </h2>
+                
+                <div class="radar-distance-display">
+                    <div id="radarDistance">0.0 cm</div>
+                </div>
+                
+                <div class="radar-container">
+                    <div class="radar-screen">
+                        <div class="radar-range-rings">
+                            <div class="radar-range-ring"></div>
+                            <div class="radar-range-ring"></div>
+                            <div class="radar-range-ring"></div>
+                            <div class="radar-range-ring"></div>
+                            <div class="radar-range-ring"></div>
+                        </div>
+                        <div class="radar-labels">
+                            <div class="radar-label top">0°</div>
+                            <div class="radar-label right">90°</div>
+                            <div class="radar-label bottom">180°</div>
+                            <div class="radar-label left">270°</div>
+                        </div>
+                        <div class="radar-sweep"></div>
+                        <div class="radar-blip" id="radarBlip"></div>
+                    </div>
+                </div>
+                
+                <div class="radar-stats">
+                    <div class="radar-stat">
+                        <div class="radar-stat-label">Min</div>
+                        <div class="radar-stat-value" id="minDistance">- cm</div>
+                    </div>
+                    <div class="radar-stat">
+                        <div class="radar-stat-label">Max</div>
+                        <div class="radar-stat-value" id="maxDistance">- cm</div>
+                    </div>
+                    <div class="radar-stat">
+                        <div class="radar-stat-label">Avg</div>
+                        <div class="radar-stat-value" id="avgDistance">- cm</div>
+                    </div>
+                    <div class="radar-stat">
+                        <div class="radar-stat-label">Status</div>
+                        <div class="radar-stat-value" id="radarStatus">Wait...</div>
+                    </div>
+                </div>
+                
+                <button class="beep-btn on" id="beepToggleBtn">
+                    🔊 BEEP ON
+                </button>
+            </div>
+
+            <!-- Relay Control Section -->
+            <div class="control-section">
+                <h2 class="section-title">
+                    <span class="section-icon">🔌</span>
+                    Relay
+                </h2>
+                
+                <div class="relay-buttons">
+                    <button class="relay-btn on" id="relayOnBtn">
+                        ⚡ HIDUP
+                    </button>
+                    <button class="relay-btn off" id="relayOffBtn">
+                        ⭕ MATI
+                    </button>
+                </div>
+                
+                <div id="relayStatus"></div>
+            </div>
+
+            <!-- Troubleshooting Section -->
+            <div class="control-section">
+                <h2 class="section-title">
+                    <span class="section-icon">🔧</span>
+                    Troubleshooting
+                </h2>
+                
+                <div class="troubleshoot-info">
+                    <div class="connection-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Port:</span>
+                            <span class="detail-value" id="currentPort">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" id="connectionDetails">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Last Update:</span>
+                            <span class="detail-value" id="lastUpdate">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="troubleshoot-buttons">
+                        <button class="troubleshoot-btn" id="reconnectBtn">
+                            🔄 Reconnect
+                        </button>
+                        <button class="troubleshoot-btn" id="pingBtn">
+                            📡 Ping Test
+                        </button>
+                        <button class="troubleshoot-btn" id="sensorTestBtn">
+                            🧪 Sensor Test
+                        </button>
+                    </div>
+                    
+                    <div class="troubleshoot-log" id="troubleshootLog">
+                        Ready for troubleshooting...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
